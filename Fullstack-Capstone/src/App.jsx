@@ -12,20 +12,53 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 
 import AdminPage from "./components/pages/AdminPage";
+import ShopPage from "./components/pages/ShopPage";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   let [count, setCount] = useState(0);
-  const [isAdminVisible, setIsAdminVisible] = useState(false);
-  const [isShopVisible, setIsShopVisible] = useState(false);
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([
+    {
+      id: 1,
+      name: "Laptop",
+      description: "Incredible design",
+      price: 1000,
+      image: "https://picsum.photos/300/200",
+    },
+    {
+      id: 2,
+      name: "Phone",
+      description: "Incredible design",
+      price: 1000,
+      image: "https://picsum.photos/300/200",
+    },
+    {
+      id: 3,
+      name: "Tablet",
+      description: "Super fast",
+      price: 500,
+      image: "https://picsum.photos/300/200",
+    },
+
+  ]);
+  const [cart, setCart] = useState([]);
+  const [cartAmount, setCartAmount] = useState(0);
 
   return (
     <>
-      <NavBar setIsAdminVisible={setIsAdminVisible} />
-
-      {isAdminVisible && (
-        <AdminPage products={products} setProducts={setProducts} />
-      )}
+      <NavBar cartAmount={cartAmount} />
+      <Routes>
+        <Route
+          path="/admin"
+          element={<AdminPage products={products} setProducts={setProducts} />}
+        />
+        <Route
+          path="/shop"
+          element={
+            <ShopPage products={products} cart={cart} setCart={setCart} cartAmount={cartAmount} setCartAmount={setCartAmount} />
+          }
+        />
+      </Routes>
     </>
   );
 }

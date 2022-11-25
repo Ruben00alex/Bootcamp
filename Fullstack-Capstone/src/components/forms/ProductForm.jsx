@@ -15,7 +15,6 @@ function ProductForm({ onSubmit, defaultEditValues }) {
     image: yup.string().required(),
   });
 
-  
   const defaultValues = {
     name: "",
     description: "",
@@ -23,7 +22,7 @@ function ProductForm({ onSubmit, defaultEditValues }) {
     image: "",
   };
   const { control, watch, handleSubmit, reset } = useForm({
-    defaultValues: defaultEditValues || defaultValues ,
+    defaultValues: defaultEditValues || defaultValues,
     resolver: yupResolver(productSchema),
     mode: "all",
   });
@@ -38,7 +37,7 @@ function ProductForm({ onSubmit, defaultEditValues }) {
       onSubmit={handleSubmit(onSubmit)}
       sx={{ padding: "24px" }}
     >
-      <Grid container spacing={4}>
+      <Grid container spacing={6}>
         <Grid item xs={12}>
           <Controller
             control={control}
