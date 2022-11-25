@@ -13,10 +13,11 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCardIcon from "@mui/icons-material/ShoppingCart";
 
 import {Link} from 'react-router-dom'
-const NavBar = ({cartAmount}) => {
+const NavBar = ({cartAmount, showCartModal, setShowCartModal}) => {
   console.log("DEBUG: render Navbar component");
   return (
-    <AppBar position="static">
+    //make appbar always on top even when scrolling
+    <AppBar position="fixed">
       <Container maxWidth="xl">
         <Toolbar>
           <Typography
@@ -58,7 +59,7 @@ const NavBar = ({cartAmount}) => {
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Badge badgeContent={cartAmount} color="secondary">
-            <IconButton sx={{ p: 0 }}>
+            <IconButton sx={{ p: 0 }} onClick={() => setShowCartModal(true)}>
               <ShoppingCardIcon sx={{ color: "white" }} />
             </IconButton>
             </Badge>

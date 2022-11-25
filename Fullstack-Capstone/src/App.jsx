@@ -14,9 +14,9 @@ import Box from "@mui/material/Box";
 import AdminPage from "./components/pages/AdminPage";
 import ShopPage from "./components/pages/ShopPage";
 import { Route, Routes } from "react-router-dom";
+import ShowCartModal from "./components/modals/ShowCartModal";
 
 function App() {
-  let [count, setCount] = useState(0);
   const [products, setProducts] = useState([
     {
       id: 1,
@@ -43,10 +43,11 @@ function App() {
   ]);
   const [cart, setCart] = useState([]);
   const [cartAmount, setCartAmount] = useState(0);
+  const [showCartModal, setShowCartModal] = useState(false);
 
   return (
     <>
-      <NavBar cartAmount={cartAmount} />
+      <NavBar cartAmount={cartAmount} showCartModal={showCartModal} setShowCartModal={setShowCartModal} />
       <Routes>
         <Route
           path="/admin"
@@ -59,6 +60,7 @@ function App() {
           }
         />
       </Routes>
+        <ShowCartModal cart={cart} open={showCartModal} onClose={()=> setShowCartModal(false)} />
     </>
   );
 }

@@ -30,7 +30,7 @@ const ProductList = ({
       <Container sx={{ mt: 10 }}>
         <Grid container spacing={2} sx={{ mt: 1 }}>
           {products.map((product) => (
-            <Grid item xs={12} sm={6} md={4} key={product._id}>
+            <Grid item xs={12} sm={6} md={4} key={product.id}>
               <Box
                 sx={{
                   display: "column",
@@ -41,7 +41,7 @@ const ProductList = ({
                 }}
               >
                 <ProductInfo product={product} />
-                <Stack direction="row">
+                <Stack direction="row" sx={{ mt: 1, align: "center" ,justifyContent:"center"}}>
                   {isAdmin && (
                     <>
                       <Button
@@ -77,7 +77,7 @@ const ProductList = ({
 
                   {!isAdmin && (
                     <Button
-                      sx={{ width: 1 }}
+                      sx={{ width: 1 ,align: "center" ,justifyContent:"center" }}
                       type="contained"
                       onClick={() => handleAddToCart(product)}
                     >

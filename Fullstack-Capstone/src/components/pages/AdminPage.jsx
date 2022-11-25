@@ -59,10 +59,11 @@ function AdminPage({ products, setProducts }) {
 
   return (
     <>
-      <Box>
+      <Container maxWidth="xl">
         <Fab
           variant="extended"
-          sx={{ position: "absolute", bottom: 30, right: 30 }}
+          //place in the bottom right corner
+          sx={{ position: "fixed", bottom: 16, right: 16 }}
           color="primary"
           onClick={() => {
             setProductToEdit(null);
@@ -81,24 +82,25 @@ function AdminPage({ products, setProducts }) {
           onSubmit={handleOnSubmit}
           defaultEditValues={productToEdit}
         />
-      </Box>
+        {!!products.length && (
+          <ProductList
+            products={products}
+            handleOnDelete={handleOnDelete}
+            handleOnEdit={handleOnEdit}
+            isAdmin={
+              true /* this is just to show the edit and delete buttons */
+            }
+          />
+        )}
 
-      {!!products.length && (
-        <ProductList
-          products={products}
-          handleOnDelete={handleOnDelete}
-          handleOnEdit={handleOnEdit}
-          isAdmin={true /* this is just to show the edit and delete buttons */}
-        />
-      )}
-
-      {!products.length && (
-        <Box sx={{ height: 100, my: 10 }}>
-          <Typography variant="h4" sx={{ textAlign: "center" }}>
-            No products to display
-          </Typography>
-        </Box>
-      )}
+        {!products.length && (
+          <Box sx={{ height: 100, my: 10 }}>
+            <Typography variant="h4" sx={{ textAlign: "center" }}>
+              No products to display
+            </Typography>
+          </Box>
+        )}
+      </Container>
     </>
   );
 }

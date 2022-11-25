@@ -18,7 +18,7 @@ const ShopPage = ({ products, cart, setCart, cartAmount, setCartAmount }) => {
         }else{console.log("product not in cart")}
       }
 
-    //if the product is not in the cart, we need to add it to the cart
+    //if the product is not in the cart, we need to add it
     if (!productInCart) {
       console.log("product not in cart");
       console.log("adding product to cart");
