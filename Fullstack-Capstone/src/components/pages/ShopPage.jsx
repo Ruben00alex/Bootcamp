@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {Container} from "@mui/material";
+import { Container } from "@mui/material";
 import ProductList from "../ProductList";
 const ShopPage = ({ products, cart, setCart, cartAmount, setCartAmount }) => {
   const handleAddToCart = (product) => {
@@ -10,15 +10,17 @@ const ShopPage = ({ products, cart, setCart, cartAmount, setCartAmount }) => {
     let newCart = [...cart];
     //if the product is already in the cart, we need to increment the quantity
 
-      for (let i = 0; i < cart.length; i++) {
-        if (cart[i][0].id == product.id) {
-          cart[i][1] += 1;
-          productInCart = true;
-          break;
-        }else{console.log("product not in cart")}
+    for (let i = 0; i < cart.length; i++) {
+      if (cart[i][0].id == product.id) {
+        cart[i][1] += 1;
+        productInCart = true;
+        break;
+      } else {
+        console.log("product not in cart");
       }
+    }
 
-    //if the product is not in the cart, we need to add it
+    //If the product is not in the cart, we need to add it
     if (!productInCart) {
       console.log("product not in cart");
       console.log("adding product to cart");
@@ -31,13 +33,13 @@ const ShopPage = ({ products, cart, setCart, cartAmount, setCartAmount }) => {
   };
   return (
     <>
-    <Container maxWidth="md">
-      <ProductList
-        products={products}
-        isAdmin={false}
-        handleAddToCart={handleAddToCart}
-      />
-    </Container>
+      <Container maxWidth="lg">
+        <ProductList
+          products={products}
+          isAdmin={false}
+          handleAddToCart={handleAddToCart}
+        />
+      </Container>
     </>
   );
 };

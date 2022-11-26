@@ -27,7 +27,7 @@ const ProductList = ({
 }) => {
   return (
     <>
-      <Container sx={{ mt: 10 }}>
+      <Container sx={{ my: 10 }}>
         <Grid container spacing={2} sx={{ mt: 1 }}>
           {products.map((product) => (
             <Grid item xs={12} sm={6} md={4} key={product.id}>
@@ -41,7 +41,7 @@ const ProductList = ({
                 }}
               >
                 <ProductInfo product={product} />
-                <Stack direction="row" sx={{ mt: 1, align: "center" ,justifyContent:"center"}}>
+                <Stack direction="row" sx={{m:0, align: "center" ,justifyContent:"center"}}>
                   {isAdmin && (
                     <>
                       <Button

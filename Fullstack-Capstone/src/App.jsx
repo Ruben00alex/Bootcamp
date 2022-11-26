@@ -15,7 +15,7 @@ import AdminPage from "./components/pages/AdminPage";
 import ShopPage from "./components/pages/ShopPage";
 import { Route, Routes } from "react-router-dom";
 import ShowCartModal from "./components/modals/ShowCartModal";
-
+import CheckoutPage from "./components/pages/CheckoutPage";
 function App() {
   const [products, setProducts] = useState([
     {
@@ -39,7 +39,6 @@ function App() {
       price: 500,
       image: "https://picsum.photos/300/200",
     },
-
   ]);
   const [cart, setCart] = useState([]);
   const [cartAmount, setCartAmount] = useState(0);
@@ -47,7 +46,11 @@ function App() {
 
   return (
     <>
-      <NavBar cartAmount={cartAmount} showCartModal={showCartModal} setShowCartModal={setShowCartModal} />
+      <NavBar
+        cartAmount={cartAmount}
+        showCartModal={showCartModal}
+        setShowCartModal={setShowCartModal}
+      />
       <Routes>
         <Route
           path="/admin"
@@ -56,11 +59,29 @@ function App() {
         <Route
           path="/shop"
           element={
-            <ShopPage products={products} cart={cart} setCart={setCart} cartAmount={cartAmount} setCartAmount={setCartAmount} />
+            <ShopPage
+              products={products}
+              cart={cart}
+              setCart={setCart}
+              cartAmount={cartAmount}
+              setCartAmount={setCartAmount}
+            />
           }
         />
+        <Route path="/checkout" element={<CheckoutPage
+        cart={cart}
+        setCart={setCart}
+        />}/>
+
       </Routes>
-        <ShowCartModal cart={cart} open={showCartModal} onClose={()=> setShowCartModal(false)} />
+      <ShowCartModal
+        cart={cart}
+        open={showCartModal}
+        onClose={() => setShowCartModal(false)}
+        setCart={setCart}
+        cartAmount={cartAmount}
+        setCartAmount={setCartAmount}
+      />
     </>
   );
 }
