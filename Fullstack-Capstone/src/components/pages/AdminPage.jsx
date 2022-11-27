@@ -10,13 +10,18 @@ import {
   Fab,
 } from "@mui/material";
 
-import { useState } from "react";
+import { useState,useContext } from "react";
+
+import AppContext from "../../context/AppContext";
 
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ProductFormModal from "../modals/ProductFormModal";
 import ProductList from "../ProductList";
 
-function AdminPage({ products, setProducts }) {
+function AdminPage() {
+
+  //Context where we store the products, cart, cartAmount, and the functions to modify them, here we are using the context to get the products
+  const {products,setProducts} = useContext(AppContext);
   const [isProductFormModalVisible, setIsProductFormModalVisible] =
     useState(false);
 

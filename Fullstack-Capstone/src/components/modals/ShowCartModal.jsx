@@ -15,14 +15,14 @@ import {
 
 import { Link } from "react-router-dom";
 
-const ShowCartModal = ({
-  cart,
-  setCart,
-  open,
-  onClose,
-  cartAmount,
-  setCartAmount,
-}) => {
+import { useContext } from "react";
+
+import AppContext from "../../context/AppContext";
+
+const ShowCartModal = ({ open, onClose }) => {
+  const { cart, setCart, cartAmount, setCartAmount, products } =
+    useContext(AppContext);
+
   const increaseQuantity = (id, amount) => {
     let newCart = [...cart];
     for (let i = 0; i < cart.length; i++) {
@@ -44,10 +44,17 @@ const ShowCartModal = ({
 
   const showCartTotal = () => {
     let total = 0;
-    cart.forEach((item) => {
-      total += item[0].price * item[1];
-    });
-    console.log(total);
+
+    //the cart is an array of arrays, each array has the product and the quantity, but the products change so we need to find the product in the products array
+    for (let i = 0; i < cart.length; i++) {
+      for (let j = 0; j < products.length; j++) {
+        if (cart[i][0].id == products[j].id) {
+          total += cart[i][1] * products[j].price;
+          break;
+        }
+      }
+    }
+
     return total;
   };
 
@@ -65,20 +72,19 @@ const ShowCartModal = ({
           maxWidth="100%"
           sx={{
             maxWidth: "100%",
-            margin: { xs: "0" },
-            width: { xs: "1", md: "auto" },
           }}
         >
-          <TableContainer
+          <TableContainer 
             component={Paper}
             sx={{
               maxWidth: "100%",
               margin: { xs: "0" },
               width: { xs: "1", md: "auto" },
+
             }}
           >
-            <Table
-              sx={{ display: { xs: "block", md: "table" } }}
+            <Table dense
+              sx={{ display: { xs: "table", md: "table" } }}
               aria-label="simple table"
             >
               <TableHead>
@@ -99,21 +105,41 @@ const ShowCartModal = ({
                     <TableCell component="th" scope="row">
                       <Box sx={{ display: "flex", alignItems: "center" }}>
                         <img
-                          src={row[0].image}
+                          //the image source is the image will be gotten from the product with the same id as the product in the cart, so we need to get the product with the same id as the product in the cart
+                          src={products.find((product) => {
+                            return product.id == row[0].id;
+                          }).image}
+                          
                           alt={row[0].name}
-                          //cover
-                          style={{ height: "50px" ,marginRight: "10px"}}
-                          key={row[0].id+"img"}
+                          //cover all the space
+                          style={{
+                            height: "50px",
+                            marginRight: "10px",
+                            objectFit: "cover",
+                          }}
+                          key={row[0].id + "img"}
                         />
                         <Typography variant="h6" key={row[0].id}>
-                          {row[0].name}
+                          {products.find((product) => {
+                            return product.id == row[0].id;
+                          }).name}
                         </Typography>
                       </Box>
                     </TableCell>
-                    <TableCell align="right">{row[0].description}</TableCell>
-                    <TableCell align="right">{row[0].price}</TableCell>
-                    <TableCell align="right">
-                      <Box sx={{ display: "flex", justifyContent: "center" ,alignItems: "center"}}>
+                    <TableCell align="center">{products.find((product) => {
+                            return product.id == row[0].id;
+                          }).description}</TableCell>
+                    <TableCell align="center">{products.find((product) => {
+                            return product.id == row[0].id;
+                          }).price}</TableCell>
+                    <TableCell align="center">
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
                         <Button
                           children="-"
                           onClick={() => increaseQuantity(row[0].id, -1)}
@@ -128,17 +154,24 @@ const ShowCartModal = ({
 
                     <TableCell align="center">
                       <Typography variant="h6">
-                        {row[0].price * row[1]}
+                        {products.find((product) => {
+                            return product.id == row[0].id;
+                          }).price * row[1]}
                       </Typography>
                     </TableCell>
                   </TableRow>
                 ))}
-                {cart.length > 0 && (
+                {cart.length > 0 ?(
                   <>
                     <TableRow
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
-                      <TableCell component="th" scope="row" colSpan={4} align="right">
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        colSpan={4}
+                        align="right"
+                      >
                         Total
                       </TableCell>
                       <TableCell align="center">{showCartTotal()}</TableCell>
@@ -146,21 +179,19 @@ const ShowCartModal = ({
                     <TableRow
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
-                      <TableCell component="th" scope="row" colSpan={4} align="right">
-                        Go to checkout
-                      </TableCell>
-                      <TableCell align="right">
+                      <TableCell align="center" colSpan={5}>
                         <Link to="/checkout">
-                          <Button variant="contained">Checkout</Button>
+                          
+                          <Button variant="outlined" color="primary"
+                            onClick={onClose}
+                          >Checkout</Button>
                         </Link>
                       </TableCell>
                     </TableRow>
                   </>
-                )}
-
-                {cart.length == 0 && (
+                ):(
                   <TableRow>
-                    <TableCell component="th" scope="row">
+                    <TableCell component="th" scope="row" colSpan={5} align="center">
                       <Typography variant="h6">Your cart is empty</Typography>
                     </TableCell>
                   </TableRow>

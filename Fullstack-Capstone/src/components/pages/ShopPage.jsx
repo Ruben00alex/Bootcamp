@@ -1,7 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState,useContext } from "react";
+import AppContext from "../../context/AppContext";
+
 import { Container } from "@mui/material";
 import ProductList from "../ProductList";
-const ShopPage = ({ products, cart, setCart, cartAmount, setCartAmount }) => {
+const ShopPage = () => {
+  const { products, cart, setCart, cartAmount, setCartAmount } = useContext(AppContext);
+  
   const handleAddToCart = (product) => {
     console.log("product", product);
     //cart is a 2d array, each element is an array of [product, quantity], so we need to check if the product is already in the cart
@@ -12,7 +16,7 @@ const ShopPage = ({ products, cart, setCart, cartAmount, setCartAmount }) => {
 
     for (let i = 0; i < cart.length; i++) {
       if (cart[i][0].id == product.id) {
-        cart[i][1] += 1;
+        newCart[i][1] += 1;
         productInCart = true;
         break;
       } else {
@@ -35,7 +39,6 @@ const ShopPage = ({ products, cart, setCart, cartAmount, setCartAmount }) => {
     <>
       <Container maxWidth="lg">
         <ProductList
-          products={products}
           isAdmin={false}
           handleAddToCart={handleAddToCart}
         />
