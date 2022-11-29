@@ -7,16 +7,28 @@ import {
   Box,
   IconButton,
   Badge,
+  Switch
 } from "@mui/material";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCardIcon from "@mui/icons-material/ShoppingCart";
 
+import AppContext from "../context/AppContext";
+
+import {useContext} from 'react';
 import {Link} from 'react-router-dom'
-const NavBar = ({cartAmount}) => {
+const NavBar = () => {
+  
+  const {cart, setCart, cartAmount, setCartAmount,showCartModal, setShowCartModal, useDarkTheme , setUseDarkTheme} = useContext(AppContext);
+
+
+  const toggleTheme = () => {
+    setUseDarkTheme((theme) => !theme);
+  }
+
   console.log("DEBUG: render Navbar component");
   return (
-    <AppBar position="static">
+    <AppBar position="fixed" >
       <Container maxWidth="xl">
         <Toolbar>
           <Typography
@@ -56,9 +68,11 @@ const NavBar = ({cartAmount}) => {
             </Button>
             </Link>
           </Box>
+
+          <Switch onChange={toggleTheme} />
           <Box sx={{ flexGrow: 0 }}>
             <Badge badgeContent={cartAmount} color="secondary">
-            <IconButton sx={{ p: 0 }}>
+            <IconButton sx={{ p: 0 }} onClick={() => setShowCartModal(true)}>
               <ShoppingCardIcon sx={{ color: "white" }} />
             </IconButton>
             </Badge>

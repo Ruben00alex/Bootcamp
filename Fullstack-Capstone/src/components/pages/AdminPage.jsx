@@ -10,13 +10,18 @@ import {
   Fab,
 } from "@mui/material";
 
-import { useState } from "react";
+import { useState,useContext } from "react";
+
+import AppContext from "../../context/AppContext";
 
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ProductFormModal from "../modals/ProductFormModal";
 import ProductList from "../ProductList";
 
-function AdminPage({ products, setProducts }) {
+function AdminPage() {
+
+  //Context where we store the products, cart, cartAmount, and the functions to modify them, here we are using the context to get the products
+  const {products,setProducts} = useContext(AppContext);
   const [isProductFormModalVisible, setIsProductFormModalVisible] =
     useState(false);
 
@@ -59,10 +64,11 @@ function AdminPage({ products, setProducts }) {
 
   return (
     <>
-      <Box>
+      <Container maxWidth="xl">
         <Fab
           variant="extended"
-          sx={{ position: "absolute", bottom: 30, right: 30 }}
+          //place in the bottom right corner
+          sx={{ position: "fixed", bottom: 16, right: 16 }}
           color="primary"
           onClick={() => {
             setProductToEdit(null);
@@ -81,24 +87,25 @@ function AdminPage({ products, setProducts }) {
           onSubmit={handleOnSubmit}
           defaultEditValues={productToEdit}
         />
-      </Box>
+        {!!products.length && (
+          <ProductList
+            products={products}
+            handleOnDelete={handleOnDelete}
+            handleOnEdit={handleOnEdit}
+            isAdmin={
+              true /* this is just to show the edit and delete buttons */
+            }
+          />
+        )}
 
-      {!!products.length && (
-        <ProductList
-          products={products}
-          handleOnDelete={handleOnDelete}
-          handleOnEdit={handleOnEdit}
-          isAdmin={true /* this is just to show the edit and delete buttons */}
-        />
-      )}
-
-      {!products.length && (
-        <Box sx={{ height: 100, my: 10 }}>
-          <Typography variant="h4" sx={{ textAlign: "center" }}>
-            No products to display
-          </Typography>
-        </Box>
-      )}
+        {!products.length && (
+          <Box sx={{ height: 100, my: 10 }}>
+            <Typography variant="h4" sx={{ textAlign: "center" }}>
+              No products to display
+            </Typography>
+          </Box>
+        )}
+      </Container>
     </>
   );
 }
