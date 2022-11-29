@@ -28,7 +28,6 @@ const NavBar = () => {
 
   console.log("DEBUG: render Navbar component");
   return (
-    //make appbar always on top even when scrolling
     <AppBar position="fixed" >
       <Container maxWidth="xl">
         <Toolbar>

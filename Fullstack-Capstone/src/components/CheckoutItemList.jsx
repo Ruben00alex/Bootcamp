@@ -25,7 +25,6 @@ const CheckoutItemList = () => {
             >
             
             {cart.map((row) => (
-              //border on the right of the container
               <Grid item xs={4} md={2}  key={row[0].id}>
                 <CheckoutItem product={row} />
               </Grid>
@@ -45,7 +44,7 @@ const CheckoutItemList = () => {
             }}
           >
             <Typography variant="h6">
-              Subtotal:{" "}
+              Subtotal:{"$"}
               {cart.reduce((acc, row) => {
                 return acc + row[0].price * row[1];
               }, 0)}

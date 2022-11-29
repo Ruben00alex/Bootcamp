@@ -32,7 +32,6 @@ const ShowCartModal = ({ open, onClose }) => {
           setCart(newCart);
           setCartAmount((cartAmount) => cartAmount + amount);
         } else {
-          //remove the item from the cart
           newCart.splice(i, 1);
           setCart(newCart);
           setCartAmount((cartAmount) => cartAmount + amount);
@@ -45,7 +44,6 @@ const ShowCartModal = ({ open, onClose }) => {
   const showCartTotal = () => {
     let total = 0;
 
-    //the cart is an array of arrays, each array has the product and the quantity, but the products change so we need to find the product in the products array
     for (let i = 0; i < cart.length; i++) {
       for (let j = 0; j < products.length; j++) {
         if (cart[i][0].id == products[j].id) {
@@ -105,13 +103,11 @@ const ShowCartModal = ({ open, onClose }) => {
                     <TableCell component="th" scope="row">
                       <Box sx={{ display: "flex", alignItems: "center" }}>
                         <img
-                          //the image source is the image will be gotten from the product with the same id as the product in the cart, so we need to get the product with the same id as the product in the cart
                           src={products.find((product) => {
                             return product.id == row[0].id;
                           }).image}
                           
                           alt={row[0].name}
-                          //cover all the space
                           style={{
                             height: "50px",
                             marginRight: "10px",

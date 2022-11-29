@@ -52,7 +52,6 @@ const CheckoutPage = () => {
 
     console.log(data);
     let newOrders = [...orders];
-    //create a new order object
     let newOrder = {
       id: orders.length + 1,
       firstName: data.firstName,
@@ -68,7 +67,6 @@ const CheckoutPage = () => {
       }, 0),
     };
 
-    //add the new order to the new orders array
     newOrders.push(newOrder);
 
     setOrders(newOrders);
